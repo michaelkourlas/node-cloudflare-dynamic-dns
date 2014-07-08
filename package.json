@@ -3,7 +3,7 @@
     "description": "Updates a Cloudflare DNS address record with an IP address",
     "keywords":    ["cloudflare","dns"],
     "homepage":    "http://www.kourlas.net",
-    "version":     "0.1.0",
+    "version":     "0.1.1",
     "author":      "Michael Kourlas <michael@kourlas.net>",
     "main":        "./lib/cloudflare-dynamic-dns.js",
     "repository" : {

@@ -31,7 +31,7 @@ boo.example.com:
 
     var cloudflareddns = require("cloudflare-dynamic-dns");
 
-	cloudflareddns("jsmith@example.com", "example.com", "boo", "abcde12235");
+	cloudflareddns("jsmith@example.com", "abcde12235", "example.com", "boo");
 	
 ## License ##
 
