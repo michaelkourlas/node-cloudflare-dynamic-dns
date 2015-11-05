@@ -29,9 +29,11 @@ The function returns nothing if the request was successful, and throws an error 
 The following example illustrates the basic usage of cloudflare-dynamic-dns, updating the A record for 
 boo.example.com:
 
-    var cloudflareddns = require("cloudflare-dynamic-dns");
+```js
+var cloudflareddns = require("cloudflare-dynamic-dns");
 
-	cloudflareddns("jsmith@example.com", "abcde12235", "example.com", "boo");
+cloudflareddns("jsmith@example.com", "abcde12235", "example.com", "boo");
+```
 	
 ## License ##
 
