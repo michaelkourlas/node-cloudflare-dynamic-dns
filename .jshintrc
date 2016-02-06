@@ -1,0 +1,10 @@
+{
+    "strict": "global",
+    "undef": true,
+    "unused": true,
+    "sub": true,
+    "node": true,
+    "globals": {
+        "Promise": false
+    }
+}

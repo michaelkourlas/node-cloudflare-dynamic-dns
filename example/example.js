@@ -1,5 +1,4 @@
-/* jshint node:true */
-
+"use strict";
 /**
  * cloudflare-dynamic-dns
  * Copyright © 2014 Michael Kourlas
@@ -18,14 +17,35 @@
  * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-(function() {
-    "use strict";
+var cloudflareddns = require("../lib/cloudflare-dynamic-dns");
 
-    var cloudflareddns = require("../lib/cloudflare-dynamic-dns.js");
+// Use external IP address of current machine
+cloudflareddns({
+    email: "jsmith@example.com",
+    apiToken: "abcde12235",
+    domain: "example.com",
+    subdomain: "boo"
+}).then(
+    function (ip) {
+        console.log("Updated boo.example.com to " + ip);
+    },
+    function (reason) {
+        console.error(reason);
+    }
+);
 
-    // Use external IP address of current machine
-    cloudflareddns("jsmith@example.com", "abcde12235", "example.com", "boo");
-
-    // Manually specify IP address
-    cloudflareddns("jsmith@example.com", "abcde12235", "example.com", "boo", "203.0.113.0");
-})();
+// Manually specify IP address
+cloudflareddns({
+    email: "jsmith@example.com",
+    apiToken: "abcde12235",
+    domain: "example.com",
+    subdomain: "boo",
+    ip: "203.0.113.0"
+}).then(
+    function (ip) {
+        console.log("Updated boo.example.com to " + ip);
+    },
+    function (reason) {
+        console.error(reason);
+    }
+);

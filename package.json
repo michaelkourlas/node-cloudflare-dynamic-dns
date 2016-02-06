@@ -1,14 +1,29 @@
 {
-    "name":        "cloudflare-dynamic-dns",
-    "description": "Updates a Cloudflare DNS address record with an IP address",
-    "keywords":    ["cloudflare","dns"],
-    "homepage":    "http://www.kourlas.net",
-    "version":     "0.1.1",
-    "author":      "Michael Kourlas <michael@kourlas.net>",
-    "main":        "./lib/cloudflare-dynamic-dns.js",
-    "repository" : {
-        "type":    "git",
-        "url":     "git://github.com/michaelkourlas/cloudflare-dynamic-dns.git"
-    },
-    "license":     "MIT"
+  "name": "cloudflare-dynamic-dns",
+  "description": "Updates a Cloudflare DNS address record with an IP address",
+  "keywords": [
+    "cloudflare",
+    "dns",
+    "dyndns"
+  ],
+  "homepage": "http://www.kourlas.net",
+  "version": "2.0.0",
+  "author": "Michael Kourlas <michael@kourlas.net>",
+  "main": "./lib/cloudflare-dynamic-dns.js",
+  "repository": "michaelkourlas/cloudflare-dynamic-dns",
+  "scripts": {
+    "test": "npm run jshint",
+    "jshint": "jshint lib/* example/*"
+  },
+  "engines": {
+    "node": ">=0.12"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.2.1",
+    "request-promise": "^2.0.0"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.1"
+  }
 }
