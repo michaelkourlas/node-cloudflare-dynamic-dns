@@ -3,8 +3,7 @@
 #############
 
 # IntelliJ IDEA
-.idea/workspace.xml
-.idea/tasks.xml
+.idea
 
 # NPM
 node_modules
