@@ -2,38 +2,56 @@
 
 ## Overview ##
 
-cloudflare-dynamic-dns is a Node.js module that updates a Cloudflare DNS address record with an IP address.
+`cloudflare-dynamic-dns` is a Node.js module that updates a CloudFlare DNS address record with an
+IP address.
 
 ## Installation ##
 
-The easiest way to install cloudflare-dynamic-dns is to use npm: `npm install cloudflare-dynamic-dns`.
-
-Alternatively, you may download the source from GitHub and copy it to a folder named "cloudflare-dynamic-dns" within
-your "node_modules" directory.
+```bash
+npm install cloudflare-dynamic-dns
+```
 
 ## Usage ##
 
-The cloudflare-dynamic-dns module contains one function which takes the following arguments:
+The `cloudflare-dynamic-dns` module is a function which takes one argument, an options object, with
+the following properties:
 
-* `email` - the email associated with your Cloudflare account (string, mandatory)
-* `api_token` - the API token associated with your Cloudflare account (string, mandatory)
+* `email` - the email associated with your CloudFlare account (string, mandatory)
+* `apiToken` - the API token associated with your CloudFlare account (string, mandatory)
 * `domain` - the domain corresponding to the DNS address record you wish to change (string, mandatory)
-* `subdomain` - the subdomain corresponding to the DNS address record you wish to change (string, mandatory)
-* `ip` - the new IP address for the address record; if no IP address is specified, the external IP address of the
-  current machine is used (string, optional)
-  
-The function returns nothing if the request was successful, and throws an error if it was not.
+* `subdomain` - the subdomain corresponding to the DNS address record you wish to change; `"@"` to
+update the apex record (string, mandatory)
+* `ip` - the new IP address for the address record; if no IP address is specified, the external IP
+address of the current machine is used (string, optional)
 
-## Examples ##
+The function returns a `Promise` which resolves to the actual IP address if the request was
+successful, or rejects with an `Error` if it was not.
 
-The following example illustrates the basic usage of cloudflare-dynamic-dns, updating the A record for 
-boo.example.com:
+## Example ##
 
-    var cloudflareddns = require("cloudflare-dynamic-dns");
+The following example illustrates the basic usage of `cloudflare-dynamic-dns`, updating the A
+record for `boo.example.com`:
 
-	cloudflareddns("jsmith@example.com", "abcde12235", "example.com", "boo");
-	
+```js
+var cloudflareddns = require("cloudflare-dynamic-dns");
+
+// Use external IP address of current machine
+cloudflareddns({
+    email: "jsmith@example.com",
+    apiToken: "abcde12235",
+    domain: "example.com",
+    subdomain: "boo"
+}).then(
+    function (ip) {
+        console.log("Updated boo.example.com to " + ip);
+    },
+    function (reason) {
+        console.error(reason);
+    }
+);
+```
+
 ## License ##
 
-cloudflare-dynamic-dns is licensed under the [MIT license](http://opensource.org/licenses/MIT). Please see the 
-LICENSE.md file for more information.
+`cloudflare-dynamic-dns` is licensed under the [MIT license](http://opensource.org/licenses/MIT). Please see the
+`LICENSE.md` file for more information.

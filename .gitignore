@@ -3,11 +3,11 @@
 #############
 
 # IntelliJ IDEA
-.idea/workspace.xml
-.idea/tasks.xml
+.idea
 
 # NPM
 node_modules
+npm-debug.log
 
 # Used to generate .npmignore
 .gitattributes
