@@ -24,6 +24,7 @@ export interface IAuth {
      * The API key associated with your CloudFlare account.
      */
     key: string;
+
     /**
      * The email associated with your CloudFlare account.
      */
@@ -68,15 +69,18 @@ export interface IOptions {
      * CloudFlare API settings for key and email authentication.
      */
     auth: IAuth;
+
     /**
      * The new IP address for the record. If left undefined, the external IP as
      * defined by myexternalip.com API is used.
      */
     ip?: string;
+
     /**
      * The name of the DNS record (e.g. `subdomain.example.com`).
      */
     recordName: string;
+
     /**
      * The name of the CloudFlare zone (e.g. `example.com`).
      */

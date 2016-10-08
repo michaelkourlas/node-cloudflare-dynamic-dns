@@ -17,12 +17,18 @@
 import {ApiError} from "./error";
 import {httpsRequest} from "./request";
 
+/**
+ * @private
+ */
 const URL = "https://myexternalip.com/raw";
 
 /**
  * Gets the current external IP from the myexternalip.com API.
  *
- * @param callback Callback function.
+ * @param callback Callback function called with any error that occurred as
+ *                 well as the IP address returned from the API.
+ *
+ * @private
  */
 export function getExternalIp(callback: (error?: Error,
                                          ip?: string) => void): void {

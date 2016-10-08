@@ -15,6 +15,8 @@
  */
 
 /**
+ * Returns whether or not the value is a string.
+ *
  * @private
  */
 export function isString(val: any): val is string {
@@ -22,6 +24,8 @@ export function isString(val: any): val is string {
 }
 
 /**
+ * Returns whether or not the value is undefined.
+ *
  * @private
  */
 export function isUndefined(val: any): val is undefined {
@@ -29,6 +33,8 @@ export function isUndefined(val: any): val is undefined {
 }
 
 /**
+ * Returns whether or not the value is an object.
+ *
  * @private
  */
 export function isObject(val: any): val is Object {
@@ -36,6 +42,8 @@ export function isObject(val: any): val is Object {
 }
 
 /**
+ * Returns whether or not the value is an array.
+ *
  * @private
  */
 export function isArray(val: any): val is any[] {

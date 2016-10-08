@@ -22,10 +22,14 @@ import {parse} from "url";
  * Creates an HTTPS request to the specified URL.
  *
  * @param url The URL of the HTTP request.
- * @param callback Called when a response is received.
+ * @param callback Called when a response is received with any error that
+ *                 occurred as well as the response and response body if one is
+ *                 received.
  * @param method The HTTP method associated with the request.
  * @param headers An object containing the headers of the request.
  * @param body The body of the request.
+ *
+ * @private
  */
 export function httpsRequest(url: string,
                              callback: (error?: Error,

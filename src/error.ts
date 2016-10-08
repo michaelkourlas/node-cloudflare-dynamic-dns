@@ -36,18 +36,22 @@ export class ApiError extends Error {
      * The message associated with the error.
      */
     public message: string;
+
     /**
      * The error that caused this error, if applicable.
      */
     public innerError?: any;
+
     /**
      * The response returned from the API, if applicable.
      */
     public response?: http.IncomingMessage;
+
     /**
      * The body of the response returned from the API, if applicable.
      */
     public body?: any;
+
     /**
      * The API result, if applicable.
      */
