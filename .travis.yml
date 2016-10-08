@@ -1,0 +1,11 @@
+language: node_js
+node_js:
+  - node
+  - 6
+  - 5
+  - 4
+  - 4.0.0
+install:
+  - npm install -g gulp
+  - npm install
+script: gulp

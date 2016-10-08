@@ -1,31 +1,70 @@
-/* jshint node:true */
-
 /**
- * cloudflare-dynamic-dns
- * Copyright © 2014 Michael Kourlas
+ * Copyright (C) 2014-2016 Michael Kourlas
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
- * documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
- * Software.
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
- * OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
-(function() {
-    "use strict";
+"use strict";
 
-    var cloudflareddns = require("../lib/cloudflare-dynamic-dns.js");
+var ddns = require("../lib/main");
 
-    // Use external IP address of current machine
-    cloudflareddns("jsmith@example.com", "abcde12235", "example.com", "boo");
+/**
+ * This example demonstrates the most common use of cloudflare-dynamic-dns,
+ * which updates a CloudFlare DNS record with the external IP address of the
+ * machine on which the module is running, as determined by the
+ * myexternalip.com API.
+ */
+var example1 = function() {
+    var options = {
+        auth: {
+            email: "<email>",
+            key: "<key>"
+        },
+        recordName: "galileo.kourlas.com",
+        zoneName: "kourlas.com"
+    };
+    ddns.update(options, function(err, newIp) {
+        if (err) {
+            console.log("An error occurred:");
+            console.log(err);
+        } else {
+            console.log("Successfully changed IP to " + newIp + "!");
+        }
+    });
+};
+example1();
 
-    // Manually specify IP address
-    cloudflareddns("jsmith@example.com", "abcde12235", "example.com", "boo", "203.0.113.0");
-})();
+/**
+ * This example demonstrates the use of cloudflare-dynamic-dns with a manually
+ * specified IP address.
+ */
+var example2 = function() {
+    var options = {
+        auth: {
+            email: "<email>",
+            key: "<key>"
+        },
+        ip: "93.184.216.34",
+        recordName: "galileo.kourlas.com",
+        zoneName: "kourlas.com"
+    };
+    ddns.update(options, function(err, newIp) {
+        if (err) {
+            console.log("An error occurred:");
+            console.log(err);
+        } else {
+            console.log("Successfully changed IP to " + newIp + "!");
+        }
+    });
+};
+example2();
