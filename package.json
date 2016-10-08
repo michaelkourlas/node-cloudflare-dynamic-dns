@@ -1,6 +1,6 @@
 {
   "name": "cloudflare-dynamic-dns",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Updates a Cloudflare DNS address record with an IP address or hostname",
   "keywords": [
     "cloudflare",
