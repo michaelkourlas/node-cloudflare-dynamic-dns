@@ -1,7 +1,8 @@
-## 0.2.0 ##
+## 1.0.0 ##
 
 * Re-write in TypeScript
-* Add support for root domain 
+* Add support for Cloudflare v4 API
+* Change options structure
 
 ## 0.1.1 ##
 
