@@ -293,7 +293,7 @@ export function getZoneId(zoneName: string, auth: Auth,
             return;
         }
 
-        const result = results[0];
+        const result = matchingResults[0];
         if (!isString(result.id)) {
             callback(new ApiError({
                 message: "ID for zone entry malformed or missing",
