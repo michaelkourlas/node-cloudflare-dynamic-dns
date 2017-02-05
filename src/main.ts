@@ -27,7 +27,8 @@ import {IOptions, Options} from "./options";
  *                 well as the new IP address if the request succeeded.
  */
 export function update(options: IOptions,
-                       callback: (err?: Error, newIp?: string) => void): void {
+                       callback: (err?: Error, newIp?: string,
+                                  recordName?: string, zoneName?: string) => void): void {
     const {auth, ip, recordName, zoneName} = new Options(options);
 
     if (ip) {
@@ -36,7 +37,7 @@ export function update(options: IOptions,
                 callback(error);
                 return;
             }
-            callback(undefined, ip);
+            callback(undefined, ip, recordName, zoneName);
         });
     } else {
         getExternalIp((error, externalIp) => {
@@ -50,7 +51,7 @@ export function update(options: IOptions,
                                             callback(error2);
                                             return;
                                         }
-                                        callback(undefined, externalIp);
+                                        callback(undefined, externalIp, recordName, zoneName);
                                     });
         });
     }
