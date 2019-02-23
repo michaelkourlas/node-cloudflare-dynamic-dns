@@ -42,7 +42,7 @@ includes source maps.
 
 ## Usage ##
 
-The documentation for the current version is available [here](http://www.kourlas.com/node-cloudflare-dynamic-dns/docs/1.0.0/).
+The documentation for the current version is available [here](http://www.kourlas.com/node-cloudflare-dynamic-dns/docs/1.0.1/).
 
 You can also build the documentation using gulp:
 
@@ -62,8 +62,8 @@ var options = {
         email: "<email>",
         key: "<key>"
     },
-    recordName: "galileo.kourlas.com",
-    zoneName: "kourlas.com"
+    recordName: "foo.bar.com",
+    zoneName: "bar.com"
 };
 
 ddns.update(options, function(err) {
@@ -76,7 +76,7 @@ ddns.update(options, function(err) {
 });
 ```
 
-Additional examples can be found in examples/example.js.
+Additional examples can be found in the examples directory.
 
 ## Tests ##
 
