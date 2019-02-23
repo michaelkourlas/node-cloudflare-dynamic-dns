@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2014-2016 Michael Kourlas
+ * Copyright (C) 2014-2019 Michael Kourlas
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,8 +30,8 @@ var example1 = function() {
             email: "<email>",
             key: "<key>"
         },
-        recordName: "galileo.kourlas.com",
-        zoneName: "kourlas.com"
+        recordName: "foo.bar.com",
+        zoneName: "bar.com"
     };
     ddns.update(options, function(err, newIp) {
         if (err) {
@@ -54,9 +54,9 @@ var example2 = function() {
             email: "<email>",
             key: "<key>"
         },
-        ip: "93.184.216.34",
-        recordName: "galileo.kourlas.com",
-        zoneName: "kourlas.com"
+        ip: "1.1.1.1",
+        recordName: "foo.bar.com",
+        zoneName: "bar.com"
     };
     ddns.update(options, function(err, newIp) {
         if (err) {
@@ -68,3 +68,5 @@ var example2 = function() {
     });
 };
 example2();
+
+

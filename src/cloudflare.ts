@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016 Michael Kourlas
+ * Copyright (C) 2016-2019 Michael Kourlas
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -229,7 +229,7 @@ export function getDnsRecordId(zoneId: string, dnsRecordName: string,
         }
 
         const matchingResults = results.filter(
-            result => result.name === dnsRecordName);
+            (r) => r.name === dnsRecordName);
         if (matchingResults.length === 0) {
             callback();
             return;
@@ -243,7 +243,7 @@ export function getDnsRecordId(zoneId: string, dnsRecordName: string,
             return;
         }
 
-        const result = results[0];
+        const result = matchingResults[0];
         if (!isString(result.id)) {
             callback(new ApiError({
                 message: "ID for DNS record entry malformed or missing",
@@ -277,7 +277,7 @@ export function getZoneId(zoneName: string, auth: Auth,
         }
 
         const matchingResults = results.filter(
-            result => result.name === zoneName);
+            (r) => r.name === zoneName);
         if (matchingResults.length === 0) {
             callback(new ApiError({
                 message: `No zone entries found with name ${zoneName}`,
@@ -293,7 +293,7 @@ export function getZoneId(zoneName: string, auth: Auth,
             return;
         }
 
-        const result = results[0];
+        const result = matchingResults[0];
         if (!isString(result.id)) {
             callback(new ApiError({
                 message: "ID for zone entry malformed or missing",
@@ -331,8 +331,8 @@ export function getResults(path: string,
         uri += `?page=${startPage}`;
     }
     const headers = {
-        "X-Auth-Key": auth.key,
-        "X-Auth-Email": auth.email
+        "X-Auth-Email": auth.email,
+        "X-Auth-Key": auth.key
     };
     httpsRequest(uri, (error, response, responseBody) => {
         if (error) {

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016 Michael Kourlas
+ * Copyright (C) 2016-2019 Michael Kourlas
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
+import {assert} from "chai";
 import {deleteDnsRecord, getDnsRecord} from "../../lib/cloudflare";
 import {update} from "../../lib/main";
 import {Auth} from "../../lib/options";
-import {assert} from "chai";
 
 const auth = {
-    email: process.env.CLOUDFLARE_API_EMAIL,
-    key: process.env.CLOUDFLARE_API_KEY
+    email: process.env.CLOUDFLARE_API_EMAIL as string,
+    key: process.env.CLOUDFLARE_API_KEY as string
 };
 const authObj = new Auth(auth);
 
@@ -62,7 +62,7 @@ describe("main", () => {
                         });
                 });
             });
-        });
+        }).timeout(5000);
 
         it("should correctly update a DNS record with a specified"
            + " IP", (callback) => {
@@ -104,7 +104,7 @@ describe("main", () => {
                     });
                 });
             });
-        });
+        }).timeout(5000);
 
         it("should correctly create a DNS record with the external"
            + " IP", (callback) => {
@@ -137,7 +137,7 @@ describe("main", () => {
                         });
                 });
             });
-        });
+        }).timeout(5000);
 
         it("should correctly update a DNS record with the external"
            + " IP", (callback) => {
@@ -178,6 +178,6 @@ describe("main", () => {
                     });
                 });
             });
-        });
+        }).timeout(5000);
     });
 });

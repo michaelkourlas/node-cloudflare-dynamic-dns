@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2016 Michael Kourlas
+ * Copyright (C) 2016-2019 Michael Kourlas
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,6 +32,7 @@ export function isUndefined(val: any): val is undefined {
     return Object.prototype.toString.call(val) === "[object Undefined]";
 }
 
+/* tslint:disable:ban-types */
 /**
  * Returns whether or not the value is an object.
  *
@@ -40,6 +41,8 @@ export function isUndefined(val: any): val is undefined {
 export function isObject(val: any): val is Object {
     return Object.prototype.toString.call(val) === "[object Object]";
 }
+
+/* tslint:enable:ban-types */
 
 /**
  * Returns whether or not the value is an array.
