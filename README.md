@@ -42,10 +42,6 @@ You can also build the documentation using npm:
 npm run-script docs
 ```
 
-```
-gulp docs
-```
-
 ## Examples ##
 
 The following example illustrates the basic usage of cloudflare-dynamic-dns:
