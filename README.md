@@ -36,7 +36,11 @@ source maps.
 
 The documentation for the current version is available [here](http://www.kourlas.com/node-cloudflare-dynamic-dns/docs/1.0.2/).
 
-You can also build the documentation using gulp:
+You can also build the documentation using npm:
+
+```
+npm run-script docs
+```
 
 ```
 gulp docs
