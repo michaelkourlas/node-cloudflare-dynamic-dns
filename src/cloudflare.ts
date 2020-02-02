@@ -17,12 +17,52 @@
 import {ApiError} from "./error";
 import {Auth} from "./options";
 import {httpsRequest} from "./request";
-import {isArray, isString} from "./utils";
+import {
+    isArray,
+    isCloudFlareResponse,
+    isDnsRecordArray,
+    isString,
+    isZoneArray
+} from "./utils";
 
 /**
  * @private
  */
 const BASE_URL = "https://api.cloudflare.com/client/v4";
+
+/**
+ * Represents a CloudFlare API response.
+ *
+ * @private
+ */
+export interface ICloudFlareResponse {
+    success: boolean;
+    result?: unknown;
+    result_info?: {
+        page: number;
+        total_pages: number;
+    };
+}
+
+/**
+ * Represents a CloudFlare DNS record.
+ *
+ * @private
+ */
+export interface IDnsRecord {
+    name: string;
+    id: string;
+}
+
+/**
+ * Represents a CloudFlare zone record.
+ *
+ * @private
+ */
+export interface IZone {
+    name: string;
+    id: string;
+}
 
 /**
  * Creates or updates a CloudFlare DNS record, depending on whether it already
@@ -228,6 +268,14 @@ export function getDnsRecordId(zoneId: string, dnsRecordName: string,
             return;
         }
 
+        if (!isDnsRecordArray(results)) {
+            callback(new ApiError(
+                {
+                    message: "Malformed CloudFlare API response",
+                    result: results
+                }));
+            return;
+        }
         const matchingResults = results.filter(
             (r) => r.name === dnsRecordName);
         if (matchingResults.length === 0) {
@@ -235,20 +283,22 @@ export function getDnsRecordId(zoneId: string, dnsRecordName: string,
             return;
         }
         if (matchingResults.length > 1) {
-            callback(new ApiError({
-                message: `Multiple DNS record entries found with name`
-                         + ` ${dnsRecordName}`,
-                result: results
-            }));
+            callback(new ApiError(
+                {
+                    message: `Multiple DNS record entries found with name`
+                             + ` ${dnsRecordName}`,
+                    result: results
+                }));
             return;
         }
 
         const result = matchingResults[0];
         if (!isString(result.id)) {
-            callback(new ApiError({
-                message: "ID for DNS record entry malformed or missing",
-                result: results
-            }));
+            callback(new ApiError(
+                {
+                    message: "ID for DNS record entry malformed or missing",
+                    result: results
+                }));
             return;
         }
 
@@ -276,29 +326,40 @@ export function getZoneId(zoneName: string, auth: Auth,
             return;
         }
 
+        if (!isZoneArray(results)) {
+            callback(new ApiError(
+                {
+                    message: "Malformed CloudFlare API response",
+                    result: results
+                }));
+            return;
+        }
         const matchingResults = results.filter(
             (r) => r.name === zoneName);
         if (matchingResults.length === 0) {
-            callback(new ApiError({
-                message: `No zone entries found with name ${zoneName}`,
-                result: results
-            }));
+            callback(new ApiError(
+                {
+                    message: `No zone entries found with name ${zoneName}`,
+                    result: results
+                }));
             return;
         }
         if (matchingResults.length > 1) {
-            callback(new ApiError({
-                message: `No zone entries found with name ${zoneName}`,
-                result: results
-            }));
+            callback(new ApiError(
+                {
+                    message: `No zone entries found with name ${zoneName}`,
+                    result: results
+                }));
             return;
         }
 
         const result = matchingResults[0];
         if (!isString(result.id)) {
-            callback(new ApiError({
-                message: "ID for zone entry malformed or missing",
-                result: results
-            }));
+            callback(new ApiError(
+                {
+                    message: "ID for zone entry malformed or missing",
+                    result: results
+                }));
             return;
         }
 
@@ -319,12 +380,13 @@ export function getZoneId(zoneName: string, auth: Auth,
  *
  * @private
  */
-export function getResults(path: string,
-                           auth: Auth,
-                           callback: (error?: Error, results?: any[]) => void,
-                           method: string = "GET",
-                           body?: string,
-                           startPage: number = 1): void
+export function getResults(
+    path: string,
+    auth: Auth,
+    callback: (error?: Error, results?: unknown[]) => void,
+    method = "GET",
+    body?: string,
+    startPage = 1): void
 {
     let uri = `${BASE_URL}/${path}`;
     if (method === "GET") {
@@ -336,44 +398,67 @@ export function getResults(path: string,
     };
     httpsRequest(uri, (error, response, responseBody) => {
         if (error) {
-            callback(new ApiError({
-                body: responseBody,
-                innerError: error,
-                message: "Error accessing CloudFlare API",
-                response
-            }));
+            callback(new ApiError(
+                {
+                    body: responseBody,
+                    innerError: error,
+                    message: "Error accessing CloudFlare API",
+                    response
+                }));
             return;
         }
 
         if (!responseBody) {
-            callback(new ApiError({
-                innerError: error,
-                message: "Missing response body",
-                response
-            }));
+            callback(new ApiError(
+                {
+                    innerError: error,
+                    message: "Missing response body",
+                    response
+                }));
             return;
         }
 
-        const json = JSON.parse(responseBody);
-        if (!json.success) {
-            callback(new ApiError({
-                body: responseBody,
-                message: "CloudFlare API returned success false",
-                response
-            }));
+        let validatedJson: ICloudFlareResponse;
+        try {
+            const json = JSON.parse(responseBody);
+            if (!isCloudFlareResponse(json)) {
+                callback(new ApiError(
+                    {
+                        message: "Malformed CloudFlare API response",
+                        result: json
+                    }));
+                return;
+            }
+            validatedJson = json;
+        } catch (ex) {
+            callback(new ApiError(
+                {
+                    message: "Malformed CloudFlare API response",
+                    result: responseBody
+                }));
             return;
         }
 
-        let results: any[] = [];
-        if (isArray(json.result)) {
-            results = results.concat(json.result);
+        if (!validatedJson.success) {
+            callback(new ApiError(
+                {
+                    body: responseBody,
+                    message: "CloudFlare API returned success false",
+                    response
+                }));
+            return;
+        }
+
+        let results: unknown[] = [];
+        if (isArray(validatedJson.result)) {
+            results = results.concat(validatedJson.result);
         } else {
-            results.push(json.result);
+            results.push(validatedJson.result);
         }
 
-        if (json.result_info
-            && json.result_info.page
-               < json.result_info.total_pages)
+        if (validatedJson.result_info
+            && validatedJson.result_info.page
+            < validatedJson.result_info.total_pages)
         {
             getResults(path, auth, (extraError, extraResults) => {
                 if (error) {

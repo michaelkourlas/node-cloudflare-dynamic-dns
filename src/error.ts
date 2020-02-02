@@ -21,10 +21,10 @@ import * as http from "http";
  */
 export interface IApiErrorOptions {
     message: string;
-    innerError?: any;
+    innerError?: unknown;
     response?: http.IncomingMessage;
-    body?: any;
-    result?: any;
+    body?: unknown;
+    result?: unknown;
 }
 
 /**
@@ -40,7 +40,7 @@ export class ApiError extends Error {
     /**
      * The error that caused this error, if applicable.
      */
-    public innerError?: any;
+    public innerError?: unknown;
 
     /**
      * The response returned from the API, if applicable.
@@ -50,12 +50,12 @@ export class ApiError extends Error {
     /**
      * The body of the response returned from the API, if applicable.
      */
-    public body?: any;
+    public body?: unknown;
 
     /**
      * The API result, if applicable.
      */
-    public result?: any;
+    public result?: unknown;
 
     /**
      * @private

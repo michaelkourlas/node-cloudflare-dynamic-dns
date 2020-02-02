@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-/* tslint:disable:no-console object-literal-sort-keys */
-
 import {update} from "../lib/main";
 
 /**

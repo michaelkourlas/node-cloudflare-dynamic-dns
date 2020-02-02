@@ -8,13 +8,18 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "outDir": "lib",
     "strict": true,
     "target": "es5",
     "types": [
       "node"
     ]
   },
-  "include": [
-    "src/*"
+  "exclude": [
+    "docs",
+    "examples",
+    "lib",
+    "node_modules",
+    "test"
   ]
 }

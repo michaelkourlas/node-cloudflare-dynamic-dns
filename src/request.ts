@@ -35,8 +35,8 @@ export function httpsRequest(url: string,
                              callback: (error?: Error,
                                         response?: http.IncomingMessage,
                                         body?: string) => void,
-                             method: string = "GET",
-                             headers: {[name: string]: string} = {},
+                             method = "GET",
+                             headers: { [name: string]: string } = {},
                              body?: string): void
 {
     const uri = parse(url);
