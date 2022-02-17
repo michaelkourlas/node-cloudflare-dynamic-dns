@@ -15,9 +15,9 @@
  */
 
 import {assert} from "chai";
-import {deleteDnsRecord, getDnsRecord} from "../../lib/cloudflare";
-import {update} from "../../lib/main";
-import {Auth} from "../../lib/options";
+import {deleteDnsRecord, getDnsRecord} from "../../src/cloudflare";
+import {update} from "../../src/main";
+import {Auth} from "../../src/options";
 
 const auth = {
     email: process.env.CLOUDFLARE_API_EMAIL as string,
