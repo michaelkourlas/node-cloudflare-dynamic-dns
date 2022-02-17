@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import {update} from "../lib/main";
+import {update} from "../src/main";
 
 /**
  * This example demonstrates the most common use of cloudflare-dynamic-dns,
